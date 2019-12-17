@@ -15,6 +15,5 @@ namespace ECommerce.Models
         [EmailAddress(ErrorMessageResourceType = typeof(Mensagem), ErrorMessageResourceName = "MSG_E004")]
         public string Email { get; set; }
 
-
     }
 }

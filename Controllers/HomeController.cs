@@ -100,8 +100,25 @@ namespace ECommerce.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult CadastroClientes()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CadastroClientes([FromForm] Cliente cliente)
+        {
+            if (ModelState.IsValid)
+            {
+                _banco.Add(cliente);
+                _banco.SaveChanges();
+
+                TempData["MSG_S"] = "Cadastro realizado com sucesso!";
+
+                //TODO - Implementar outros redirecionamentos como Painel ou Carrinho de Compras
+                return RedirectToAction(nameof(CadastroClientes));
+            }
             return View();
         }
 
