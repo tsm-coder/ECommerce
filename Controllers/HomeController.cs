@@ -114,6 +114,7 @@ namespace ECommerce.Controllers
                 _banco.Add(cliente);
                 _banco.SaveChanges();
 
+                //TODO - A mensagem ainda não aparece após o cadastro do cliente
                 TempData["MSG_S"] = "Cadastro realizado com sucesso!";
 
                 //TODO - Implementar outros redirecionamentos como Painel ou Carrinho de Compras

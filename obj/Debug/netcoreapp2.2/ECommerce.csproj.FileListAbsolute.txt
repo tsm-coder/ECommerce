@@ -64,4 +64,4 @@ C:\Users\thali\source\repos\proj\obj\Debug\netcoreapp2.2\ECommerce.Views.pdb
 C:\Users\thali\source\repos\proj\obj\Debug\netcoreapp2.2\ECommerce.dll
 C:\Users\thali\source\repos\proj\obj\Debug\netcoreapp2.2\ECommerce.pdb
 C:\Users\thali\source\repos\proj\obj\Debug\netcoreapp2.2\ECommerce.csproj.CopyComplete
-C:\Users\thali\source\repos\ECommerce\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ViewImports.cshtml.g.cs
+C:\Users\thali\source\repos\ECommerce\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.cshtml.g.cs
