@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using ECommerce.Repositories;
+using ECommerce.Repositories.Contracts;
 
 namespace ECommerce
 {
@@ -27,6 +29,10 @@ namespace ECommerce
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IClienteRepository, ClienteRepository>();
+
+            services.AddScoped<INewsletterRepository, NewsletterRepository>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

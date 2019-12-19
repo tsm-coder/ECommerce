@@ -8,17 +8,21 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using ECommerce.Database;
+using ECommerce.Repositories;
+using ECommerce.Repositories.Contracts;
 
 namespace ECommerce.Controllers
 {
     public class HomeController : Controller
     {
 
-        private ECommerceContext _banco;
+        private IClienteRepository _clienteRepository;
+        private INewsletterRepository _newsletterRepository;
 
-        public HomeController(ECommerceContext banco)
+        public HomeController(IClienteRepository clienteRepository, INewsletterRepository newsletterRepository)
         {
-            _banco = banco;
+            _clienteRepository = clienteRepository;
+            _newsletterRepository = newsletterRepository;
         }
 
 
@@ -33,8 +37,7 @@ namespace ECommerce.Controllers
         {
             if (ModelState.IsValid)
             {
-                _banco.NewsletterEmails.Add(newsletter);
-                _banco.SaveChanges();
+                _newsletterRepository.Cadastrar(newsletter);
 
                 TempData["MSG_S"] = "E-mail cadastrado! Agora você vai receber promoções especiais no seu e-mail! Fique atento as novidades!";
                 //TODO - A mensagem ainda não aparece após o cadastro do e-mail
@@ -111,8 +114,7 @@ namespace ECommerce.Controllers
         {
             if (ModelState.IsValid)
             {
-                _banco.Add(cliente);
-                _banco.SaveChanges();
+                _clienteRepository.Cadastrar(cliente);
 
                 //TODO - A mensagem ainda não aparece após o cadastro do cliente
                 TempData["MSG_S"] = "Cadastro realizado com sucesso!";

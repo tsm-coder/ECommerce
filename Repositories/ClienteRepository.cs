@@ -45,7 +45,7 @@ namespace ECommerce.Repositories
             return _banco.Clientes.Find(Id);
         }
 
-        public List<Cliente> ObterTodosClientes()
+        public IEnumerable<Cliente> ObterTodosClientes()
         {
             return _banco.Clientes.ToList();
         }
