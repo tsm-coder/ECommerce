@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using ECommerce.Repositories;
 using ECommerce.Repositories.Contracts;
+using ECommerce.Libraries.Session;
+using ECommerce.Libraries.Login;
 
 namespace ECommerce
 {
@@ -29,10 +31,9 @@ namespace ECommerce
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddScoped<IClienteRepository, ClienteRepository>();
-
             services.AddScoped<INewsletterRepository, NewsletterRepository>();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -40,8 +41,17 @@ namespace ECommerce
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //configuração da Sessão
+            services.AddMemoryCache();
+            services.AddSession(options=>
+            {
+                //options.Cookie.IsEssential = true;
+            });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddScoped<Session>();
+            services.AddScoped<LoginCliente>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+               .AddSessionStateTempDataProvider();
 
             //string de conexão para local db
             string connection = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ECommerce;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
@@ -67,6 +77,7 @@ namespace ECommerce
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

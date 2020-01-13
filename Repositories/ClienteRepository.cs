@@ -36,7 +36,7 @@ namespace ECommerce.Repositories
 
         public Cliente Login(string Email, string Senha)
         {
-            Cliente cliente = _banco.Clientes.Where(m => m.Email == Email && m.Senha == Senha).First();
+            Cliente cliente = _banco.Clientes.Where(m => m.Email == Email && m.Senha == Senha).FirstOrDefault();
             return cliente;
         }
 

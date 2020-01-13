@@ -10,6 +10,7 @@ using System.Text;
 using ECommerce.Database;
 using ECommerce.Repositories;
 using ECommerce.Repositories.Contracts;
+using ECommerce.Libraries.Login;
 
 namespace ECommerce.Controllers
 {
@@ -18,11 +19,13 @@ namespace ECommerce.Controllers
 
         private IClienteRepository _clienteRepository;
         private INewsletterRepository _newsletterRepository;
+        private LoginCliente _loginCliente;
 
-        public HomeController(IClienteRepository clienteRepository, INewsletterRepository newsletterRepository)
+        public HomeController(IClienteRepository clienteRepository, INewsletterRepository newsletterRepository, LoginCliente loginCliente)
         {
             _clienteRepository = clienteRepository;
             _newsletterRepository = newsletterRepository;
+            _loginCliente = loginCliente;
         }
 
 
@@ -40,7 +43,6 @@ namespace ECommerce.Controllers
                 _newsletterRepository.Cadastrar(newsletter);
 
                 TempData["MSG_S"] = "E-mail cadastrado! Agora você vai receber promoções especiais no seu e-mail! Fique atento as novidades!";
-                //TODO - A mensagem ainda não aparece após o cadastro do e-mail
 
                 return RedirectToAction(nameof(Index));
             }
@@ -98,9 +100,41 @@ namespace ECommerce.Controllers
             return View("Contato");
         }
 
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
+        }
+        
+        [HttpPost]
+        public IActionResult Login([FromForm] Cliente cliente)
+        {
+            Cliente clienteDB = _clienteRepository.Login(cliente.Email, cliente.Senha);
+
+            if(clienteDB != null)
+            {
+                _loginCliente.Login(clienteDB);
+
+                return new RedirectResult(Url.Action(nameof(Painel)));
+            }
+            else
+            {
+                ViewData["MSG_E"] = "Usuário não encontrado, verifique o e-mail e senha digitados.";
+                return View(); 
+            }
+        }
+
+        public IActionResult Painel()
+        {
+            Cliente cliente = _loginCliente.GetCliente();
+            if (cliente != null)
+            {
+                return new ContentResult() { Content = "Usuário " + cliente.id + ". E-mail: " + cliente.Email + " - Idade: " + DateTime.Now.AddYears(-cliente.Nascimento.Year).ToString("yyyy") + ". Logado!" };
+            }
+            else
+            {
+                return new ContentResult() { Content = "Acesso negado." };
+            }
         }
 
         [HttpGet]
@@ -116,7 +150,6 @@ namespace ECommerce.Controllers
             {
                 _clienteRepository.Cadastrar(cliente);
 
-                //TODO - A mensagem ainda não aparece após o cadastro do cliente
                 TempData["MSG_S"] = "Cadastro realizado com sucesso!";
 
                 //TODO - Implementar outros redirecionamentos como Painel ou Carrinho de Compras
