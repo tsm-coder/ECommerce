@@ -45,7 +45,7 @@ namespace ECommerce
             services.AddMemoryCache();
             services.AddSession(options=>
             {
-                //options.Cookie.IsEssential = true;
+                options.Cookie.IsEssential = true;
             });
 
             services.AddScoped<Session>();

@@ -11,6 +11,7 @@ using ECommerce.Database;
 using ECommerce.Repositories;
 using ECommerce.Repositories.Contracts;
 using ECommerce.Libraries.Login;
+using ECommerce.Libraries.Filtro;
 
 namespace ECommerce.Controllers
 {
@@ -124,17 +125,11 @@ namespace ECommerce.Controllers
             }
         }
 
+        [HttpGet]
+        [ClienteAutorizacao]
         public IActionResult Painel()
         {
-            Cliente cliente = _loginCliente.GetCliente();
-            if (cliente != null)
-            {
-                return new ContentResult() { Content = "Usuário " + cliente.id + ". E-mail: " + cliente.Email + " - Idade: " + DateTime.Now.AddYears(-cliente.Nascimento.Year).ToString("yyyy") + ". Logado!" };
-            }
-            else
-            {
-                return new ContentResult() { Content = "Acesso negado." };
-            }
+            return new ContentResult() {Content = "Painel do Cliente"};
         }
 
         [HttpGet]
