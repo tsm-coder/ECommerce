@@ -18,5 +18,7 @@ namespace ECommerce.Database
 
         public DbSet<NewsletterEmail> NewsletterEmails { get; set; }
 
+        public DbSet<Colaborador> Colaboradores { get; set; }
+
     }
 }
