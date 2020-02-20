@@ -1,4 +1,5 @@
-﻿using ECommerce.Models;
+﻿using ECommerce.Database;
+using ECommerce.Models;
 using ECommerce.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -9,34 +10,46 @@ namespace ECommerce.Repositories
 {
     public class ColaboradorRepository : IColaboradorRepository
     {
+        private ECommerceContext _banco;
+
+        public ColaboradorRepository(ECommerceContext banco)
+        {
+            _banco = banco;
+        }
+
         public void Atualizar(Colaborador colaborador)
         {
-            throw new NotImplementedException();
+            _banco.Update(colaborador);
+            _banco.SaveChanges();
         }
 
         public void Cadastrar(Colaborador colaborador)
         {
-            throw new NotImplementedException();
+            _banco.Add(colaborador);
+            _banco.SaveChanges();
         }
 
         public void Excluir(int Id)
         {
-            throw new NotImplementedException();
+            Colaborador colaborador = ObterColaborador(Id);
+            _banco.Remove(colaborador);
+            _banco.SaveChanges();
         }
 
         public Colaborador Login(string Email, string Senha)
         {
-            throw new NotImplementedException();
+            Colaborador colaborador = _banco.Colaboradores.Where(m => m.Email == Email && m.Senha == Senha).FirstOrDefault();
+            return colaborador;
         }
 
         public Colaborador ObterColaborador(int Id)
         {
-            throw new NotImplementedException();
+            return _banco.Colaboradores.Find(Id);
         }
 
         public IEnumerable<Colaborador> ObterTodosColaboradores()
         {
-            throw new NotImplementedException();
+            return _banco.Colaboradores.ToList();
         }
     }
 }

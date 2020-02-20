@@ -65,3 +65,5 @@ C:\Users\thali\source\repos\proj\obj\Debug\netcoreapp2.2\ECommerce.pdb
 C:\Users\thali\source\repos\proj\obj\Debug\netcoreapp2.2\ECommerce.csproj.CopyComplete
 C:\Users\thali\source\repos\ECommerce\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\thali\source\repos\ECommerce\obj\Debug\netcoreapp2.2\ECommerce.csprojAssemblyReference.cache
+C:\Users\thali\source\repos\ECommerce\obj\Debug\netcoreapp2.2\Razor\Areas\Colaborador\Views\Home\Login.cshtml.g.cs
+C:\Users\thali\source\repos\ECommerce\obj\Debug\netcoreapp2.2\Razor\Areas\Colaborador\Views\Home\RecuperarSenha.cshtml.g.cs
